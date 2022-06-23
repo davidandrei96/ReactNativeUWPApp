@@ -46,10 +46,8 @@ function HPDrivers({ navigation }) {
   const [hpDrivers, getHpDriver] = useState('');
 
   // useEffect(async () => {   // helpful for rendering immediately after component init
-  
   //   getHpDevices();
   //   getHpDrivers();
-
   // }, []);
 
 
@@ -122,9 +120,9 @@ function HPDevices({ navigation }) {
     var result = await NativeModules.ReactNativeReaderModule.getHPDevices()
     return getHpDevice(result);
   };
+  
   return (
-    
-          <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
         //contentInsetAdjustmentBehavior="automatic"
@@ -139,11 +137,9 @@ function HPDevices({ navigation }) {
           </Section>
           <Button title='Load HP Devices' color="#c244ff"  onPress={() => { getHpDevices(); }}></Button>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'blue'}}>
-
         <Button
         title="Go back to Home"
-        onPress={() => navigation.push('Home')}
-      />
+        onPress={() => navigation.push('Home')} />
           </View>
         </View>
       </ScrollView>
