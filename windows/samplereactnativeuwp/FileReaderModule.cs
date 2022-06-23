@@ -10,7 +10,7 @@ namespace samplereactnativeuwp2
     public sealed class ReactNativeReaderModule
     {
 
-        private ReactContext _reactContext;
+        private ReactContext _reactContext; // TODO: What can be done with this?
 
         [ReactInitializer]
         public void Initialize(ReactContext reactContext)
@@ -22,45 +22,53 @@ namespace samplereactnativeuwp2
         [ReactMethod("getHPDevices")]
         public async Task<string> GetHpDevices()
         {
+            #region Read_Data_From_Disk
 
             var folder = await StorageFolder.GetFolderFromPathAsync(@"C:\HPDevices");
             var filess = await folder.GetFileAsync("HPDevices.txt");
             var statusFile = await FileIO.ReadTextAsync(filess);
+            return statusFile.ToString();
+
+            #endregion
+
+            //or
+
+            #region Read_Data_From_The_AppBundle
 
             // other code
             var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///HPDevices.txt")); // for text files inside app
             Stream fileStream = await file.OpenStreamForReadAsync();
-         
-            return statusFile.ToString();
-            string text = File.ReadAllText(@"C:\HPDevices.txt");
-            return text;
             using (TextReader tr = new StreamReader(fileStream))
             {
                 return tr.ReadToEnd();
-               
-
             }
 
+            #endregion
         }
 
         [ReactMethod("getHPDrivers")]
         public async Task<string> GetHpDrivers()
         {
+            #region Read_Data_From_Disk
+
             var folder = await StorageFolder.GetFolderFromPathAsync(@"C:\HPDevices");
             var filess = await folder.GetFileAsync("HPDrivers.txt");
             var statusFile = await FileIO.ReadTextAsync(filess);
+            return statusFile.ToString();
+
+            #endregion
+
+            #region Read_Data_From_AppBundle
 
             // other code
-            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///HPDrivers.txt"));
-           
-            return statusFile.ToString();
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///HPDrivers.txt"));    
             Stream fileStream = await file.OpenStreamForReadAsync();
             using (TextReader tr = new StreamReader(fileStream))
             {
                 return tr.ReadToEnd();
-
             }
-           
+
+            #endregion
         }
     }
 }

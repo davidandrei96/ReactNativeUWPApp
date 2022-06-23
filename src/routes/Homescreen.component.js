@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 
-function HomeScreen({ navigation }) {
+function Homescreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'black' }}>
       <Text>Home Screen</Text>
@@ -16,4 +16,4 @@ function HomeScreen({ navigation }) {
   );
 }
   
-  export default HomeScreen;
+  export default Homescreen;

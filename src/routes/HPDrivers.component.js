@@ -6,9 +6,11 @@ import * as React from 'react';
    useColorScheme,
    View,
    Button,
-   NativeModules
+   NativeModules,
+   StyleSheet,
+   Text
  } from 'react-native';
- 
+ import  {useState, useEffect} from 'react';
  import {
    Colors,
    Header,
@@ -88,13 +90,30 @@ import * as React from 'react';
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'blue'}}>
         <Button
         title="Go back to Home"
-        onPress={() => navigation.push('Home')} />
+        onPress={() => navigation.push('Homescreen')} />
           </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
+const styles = StyleSheet.create({
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+});
 
    export default HPDrivers;
