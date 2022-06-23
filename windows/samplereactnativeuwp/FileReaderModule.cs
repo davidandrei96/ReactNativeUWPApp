@@ -22,19 +22,38 @@ namespace samplereactnativeuwp2
         [ReactMethod("getHPDevices")]
         public async Task<string> GetHpDevices()
         {
-            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///HPDevices.txt"));
+
+            var folder = await StorageFolder.GetFolderFromPathAsync(@"C:\HPDevices");
+            var filess = await folder.GetFileAsync("HPDevices.txt");
+            var statusFile = await FileIO.ReadTextAsync(filess);
+
+            // other code
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///HPDevices.txt")); // for text files inside app
             Stream fileStream = await file.OpenStreamForReadAsync();
+         
+            return statusFile.ToString();
+            string text = File.ReadAllText(@"C:\HPDevices.txt");
+            return text;
             using (TextReader tr = new StreamReader(fileStream))
             {
                 return tr.ReadToEnd();
+               
 
             }
+
         }
 
         [ReactMethod("getHPDrivers")]
         public async Task<string> GetHpDrivers()
-        { 
+        {
+            var folder = await StorageFolder.GetFolderFromPathAsync(@"C:\HPDevices");
+            var filess = await folder.GetFileAsync("HPDrivers.txt");
+            var statusFile = await FileIO.ReadTextAsync(filess);
+
+            // other code
             var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///HPDrivers.txt"));
+           
+            return statusFile.ToString();
             Stream fileStream = await file.OpenStreamForReadAsync();
             using (TextReader tr = new StreamReader(fileStream))
             {

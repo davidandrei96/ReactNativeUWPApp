@@ -19,8 +19,9 @@ import {
   Button,
   TextInput,
   NativeModules
-} from 'react-native';
 
+} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   Colors,
   DebugInstructions,
@@ -28,6 +29,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
 
 
 const Section = ({children, title}): Node => {
@@ -57,19 +59,31 @@ const Section = ({children, title}): Node => {
   );
 };
 
+
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const[hpDrivers, getHpDriver] = useState('');
-  const[hpDevices, getHpDevice] = useState('');
-  useEffect(async () => {   
-    getHpDevices();
-    getHpDrivers();
+  const [hpDrivers, getHpDriver] = useState('');
+  const [hpDevices, getHpDevice] = useState('');
+  // useEffect(async () => {   // helpful for rendering immediately after component init
+  
+  //   getHpDevices();
+  //   getHpDrivers();
 
-  }, []);
+  // }, []);
+
+
+  // //create your forceUpdate hook
+  // function useForceUpdate(){
+  //   const [value, setValue] = useState(0); // integer state
+  //   return () => setValue(value => value + 1); // update state to force render
+  //   // An function that increment 👆🏻 the previous state like here 
+  //   // is better than directly setting `value + 1`
+  // }
+
+ // const forceUpdate = useForceUpdate();
 
   const getHpDrivers = async() => {
     var result = await NativeModules.ReactNativeReaderModule.getHPDrivers()
@@ -83,27 +97,32 @@ const App: () => Node = () => {
  
 
   return (
+    <NavigationContainer>
+    
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
+        //contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="HP Drivers">
+          <Section  title="HP Drivers">
             {hpDrivers}   
           </Section>
           <Section title="HP Devices">
             {hpDevices}
           </Section>
-
+          <Button title='Load HP Drivers' color="#cccfff"  onPress={() => { getHpDrivers() }}></Button>
+          <Button title='Load HP Devices' color="#c244ff"  onPress={() => { getHpDevices(); }}></Button>
+          <Button title='Go to HP Driver' color="#ff54ff"  onPress={() => {navigation.navigate('Details') }}></Button>
         </View>
 
       </ScrollView>
     </SafeAreaView>
+    </NavigationContainer>
   );
 };
 
